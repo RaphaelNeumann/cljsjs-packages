@@ -13,6 +13,7 @@
 (def pkg-dir "libphonenumber-js-master")
 
 (task-options!
+ push {:repo "deploy-clojars"}
   pom {:project     'xerpa/cljsjs-libphonenumber-js
        :version     +version+
        :description "A simpler (and smaller) rewrite of Google Android's popular libphonenumber library"
@@ -41,19 +42,11 @@
     (download :url "https://codeload.github.com/halt-hammerzeit/libphonenumber-js/zip/master"
               :checksum "B133E7E96D45D0BEB63274B524B2BE43"
               :unzip true)
-
     (build-libphonenumber-js)
-
-    (show :fileset true)
-
     (sift :move {#"^libphonenumber-js-master/bundle/libphonenumber-js.min.js" "cljsjs/libphonenumber-js/common/libphonenumber-js.min.inc.js"
                  #"^libphonenumber-js-master/bundle/libphonenumber-js.js" "cljsjs/libphonenumber-js/common/libphonenumber-js.inc.js"
                  #"^libphonenumber-js-master/bundle/libphonenumber-js.min.js.map" "cljsjs/libphonenumber-js/common/libphonenumber-js.min.js.inc.map"})
-
-    (show :fileset true)
     (sift :include #{#"^cljsjs"})
-    (show :fileset true)
-
     (deps-cljs :name "xerpa.cljsjs-libphonenumber-js")
     (pom)
     (jar)))
